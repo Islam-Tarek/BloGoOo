@@ -1,50 +1,41 @@
 import React from "react";
+import { Link } from "react-router";
 import Search from "./Search";
+import Cookies from "js-cookie";
 
-export default function Navbar() {
+export default function Navbar({ onSearchResults }) {
+  const isLoggedIn = !!Cookies.get("accessToken");
+
   return (
     <div>
       <div className="navbar fixed top-0 z-3 bg-base-100 shadow-sm">
         <div className="flex-1">
-          <a className="btn btn-ghost font-extrabold text-3xl">BloGoOo</a>
-        </div>
-        <div className="flex gap-5 me-3">
-          <input
-            type="text"
-            placeholder="Search"
-            className="input input-bordered rounded-full w-24 md:w-auto"
-          />
-          <div className="dropdown dropdown-end">
-            <div
-              tabIndex={0}
-              role="button"
-              className="btn btn-ghost btn-circle avatar"
-            >
-              <div className="w-10 rounded-full">
-                <img
-                  alt="Tailwind CSS Navbar component"
-                  src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-                />
-              </div>
+          <Link to="/" className="btn btn-ghost font-extrabold text-3xl">
+            <div className="flex items-center">
+              <span className="text-2xl font-bold">
+                <span className="text-pink-500">B</span>
+                <span className="text-indigo-400">l</span>
+                <span className="text-yellow-400">o</span>
+                <span className="text-green-400">G</span>
+                <span className="text-orange-500">o</span>
+                <span className="text-blue-400">O</span>
+                <span className="text-blue-500">o</span>
+              </span>
             </div>
-            <ul
-              tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
-            >
-              <li>
-                <a className="justify-between">
-                  Profile
-                  <span className="badge">New</span>
-                </a>
-              </li>
-              <li>
-                <a>Settings</a>
-              </li>
-              <li>
-                <a>Logout</a>
-              </li>
-            </ul>
-          </div>
+          </Link>
+        </div>
+        <div className="flex gap-5 me-3 items-center">
+          <Search onSearchResults={onSearchResults} />
+          {!isLoggedIn && (
+            <>
+              <Link to="/login" className="btn btn-outline btn-primary ml-2">
+                Login
+              </Link>
+              <Link to="/register" className="btn btn-primary ml-2">
+                Register
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </div>
