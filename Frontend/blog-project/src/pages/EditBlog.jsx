@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router";
 import axios from "axios";
-import Cookies from "js-cookie";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function EditBlog() {
   const { blogId } = useParams();
@@ -48,9 +49,15 @@ export default function EditBlog() {
           },
         }
       );
+      toast.success("Image uploaded successfully", {
+        position: "bottom-right",
+      });
       return response.data.data.url;
     } catch (error) {
-      setError("Error uploading image.");
+      // setError("Error uploading image.");
+      toast.error("Error uploading image", {
+        position: "bottom-right",
+      });
       throw error;
     }
   };
@@ -75,12 +82,20 @@ export default function EditBlog() {
         caption,
         pictureUrl: newPictureUrl,
       });
-      alert("Blog updated successfully!");
-      navigate("/personal-profile");
+      setSaving(false); // <-- move this before navigate
+      toast.success("Blog updated successfully", {
+        position: "bottom-right",
+      });
+      setTimeout(() => {
+        navigate("/personal-profile");
+      }, 1000); // Give time for toast to show before navigating
     } catch (err) {
+      setSaving(false); // <-- move this before toast
       setError("Failed to update blog.");
+      toast.error("Error updating blog", {
+        position: "bottom-right",
+      });
     }
-    setSaving(false);
   };
 
   if (loading) return <div className="text-center mt-10">Loading...</div>;
@@ -145,6 +160,7 @@ export default function EditBlog() {
           {saving ? "Saving..." : "Save Changes"}
         </button>
       </form>
+      <ToastContainer position="bottom-right" />
     </div>
   );
 }

@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import bcrypt from "bcryptjs";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function ChangePassword() {
   const [currentPassword, setCurrentPassword] = useState("");
@@ -17,14 +19,17 @@ export default function ChangePassword() {
 
     if (!currentPassword || !newPassword || !rewriteNewPassword) {
       setError("All fields are required.");
+      setSuccess("");
       return;
     }
     if (newPassword.length < 6) {
       setError("New password must be at least 6 characters.");
+      setSuccess("");
       return;
     }
     if (newPassword !== rewriteNewPassword) {
       setError("New passwords do not match.");
+      setSuccess("");
       return;
     }
 
@@ -32,32 +37,40 @@ export default function ChangePassword() {
       const token = Cookies.get("accessToken");
       if (!token) {
         setError("You must be logged in.");
+        setSuccess("");
         return;
       }
       const payload = JSON.parse(atob(token.split(".")[1]));
       const userId = payload.sub || payload.id;
 
-      // Get user data
       const userRes = await axios.get(`http://localhost:3000/users/${userId}`);
       const dbPassword = userRes.data.password;
 
-      // Compare current password with hash using bcryptjs
       const isMatch = await bcrypt.compare(currentPassword, dbPassword);
       if (!isMatch) {
         setError("Current password is incorrect.");
+        setSuccess("");
         return;
       }
 
-      // Update password (json-server-auth will hash it automatically)
       await axios.patch(`http://localhost:3000/users/${userId}`, {
         password: newPassword,
       });
+      setError("");
       setSuccess("Password changed successfully!");
       setCurrentPassword("");
       setNewPassword("");
       setRewriteNewPassword("");
+      toast.success("Password changed successfully", {
+        position: "bottom-right",
+      });
     } catch (err) {
+      setSuccess("");
       setError("Failed to change password. Try again.");
+      console.error("Error changing password:", err);
+      toast.error("Error changing password", {
+        position: "bottom-right",
+      });
     }
   };
 
@@ -109,6 +122,7 @@ export default function ChangePassword() {
           Save
         </button>
       </div>
+      <ToastContainer position="bottom-right" />
     </form>
   );
 }

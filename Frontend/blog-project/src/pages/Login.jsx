@@ -33,10 +33,8 @@ export default function Login() {
         password,
       });
 
-      // Set the token in cookies with 7 days expiration
       Cookies.set("accessToken", response.data.accessToken, { expires: 7 });
 
-      // Optional: store user info from token
       const payload = JSON.parse(atob(response.data.accessToken.split(".")[1]));
       Cookies.set("user", JSON.stringify(payload), { expires: 7 });
 

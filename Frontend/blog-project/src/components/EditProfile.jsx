@@ -4,6 +4,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const schema = z.object({
   username: z.string().min(3, "Username must be at least 3 characters"),
@@ -39,7 +41,6 @@ export default function EditProfile() {
         );
         setUserData(response.data);
 
-        // Set form values
         setValue("username", response.data.username);
         setValue("email", response.data.email);
         setValue("bio", response.data.bio || "");
@@ -76,7 +77,6 @@ export default function EditProfile() {
           }
         );
 
-        // Update user profile picture in database
         const token = Cookies.get("accessToken");
         if (!token) return;
 
@@ -108,10 +108,14 @@ export default function EditProfile() {
       const userId = payload.sub || payload.id;
 
       await axios.patch(`http://localhost:3000/users/${userId}`, data);
-      alert("Profile updated successfully!");
+      toast.success("Profile updated successfully", {
+        position: "bottom-right",
+      });
     } catch (error) {
       console.error("Error updating profile:", error);
-      alert("Failed to update profile");
+      toast.error("Failed to update profile", {
+        position: "bottom-right",
+      });
     }
   };
 
@@ -236,6 +240,7 @@ export default function EditProfile() {
           </button>
         </form>
       </div>
+      <ToastContainer position="bottom-right" />
     </div>
   );
 }

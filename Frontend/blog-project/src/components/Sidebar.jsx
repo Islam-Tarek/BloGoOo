@@ -1,14 +1,15 @@
 import React from "react";
 import { Link } from "react-router";
 import Cookies from "js-cookie";
+import { toast } from "react-toastify";
 
 export default function Sidebar() {
   const handleLogout = () => {
-    // console.log("Logging out...");
     Cookies.remove("accessToken");
-    // console.log("Access token removed");
     Cookies.remove("user");
-    // console.log("User removed");
+    toast.success("Logged out successfully", {
+      position: "bottom-right",
+    });
   };
 
   return (

@@ -11,7 +11,7 @@ import Login from "./Login";
 import Profile from "./Profile";
 import PersonalProfile from "./PersonalProfile";
 import EditBlog from "./EditBlog";
-import Error from "./Error"; // <-- import Error component
+import Error from "./Error";
 import Cookies from "js-cookie";
 import AddBlogButton from "../components/AddBlogButton";
 
@@ -28,20 +28,17 @@ export default function Home() {
     setDisplayBlogs(blogs);
   };
 
-  // Helper: check if route is protected
   const isProtectedRoute = (pathname) => {
     return !["/", "/login", "/register"].includes(pathname);
   };
 
-  // If not logged in and on a protected route, show Error
   if (!isLoggedIn && isProtectedRoute(location.pathname)) {
     return <Error />;
   }
 
-  // Reset refreshBlogs after triggering and clear displayBlogs to force reload
   if (refreshBlogs) {
     setRefreshBlogs(false);
-    setDisplayBlogs(null); // <-- clear search/filter results so Blogs fetches all
+    setDisplayBlogs(null);
   }
 
   return (
@@ -69,7 +66,7 @@ export default function Home() {
                 <Blogs
                   blogs={displayBlogs}
                   onSearchResults={handleSearchResults}
-                  refreshBlogs={refreshBlogs} // <--- pass prop
+                  refreshBlogs={refreshBlogs}
                 />
                 {isLoggedIn && <AddBlogButton />}
               </>
@@ -77,9 +74,7 @@ export default function Home() {
           />
           <Route
             path="/newblog"
-            element={
-              <BlogForm setRefreshBlogs={setRefreshBlogs} /> // <--- pass setter
-            }
+            element={<BlogForm setRefreshBlogs={setRefreshBlogs} />}
           />
           <Route path="/password" element={<ChangePassword />} />
           <Route path="/editprofile" element={<EditProfile />} />

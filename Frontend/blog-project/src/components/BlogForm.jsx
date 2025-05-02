@@ -5,19 +5,17 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import Cookies from "js-cookie";
-
-// Allow empty string for pictureUrl (optional image)
+import { toast } from "react-toastify";
 const schema = z.object({
   title: z.string().min(3, "Title must be at least 3 characters"),
   pictureUrl: z
     .string()
     .trim()
     .optional()
-    .or(z.literal("")) // allow empty string
-    .refine(
-      (val) => !val || val === "" || /^https?:\/\/.+\..+/.test(val), // allow empty or valid URL
-      { message: "Please enter a valid image URL" }
-    ),
+    .or(z.literal(""))
+    .refine((val) => !val || val === "" || /^https?:\/\/.+\..+/.test(val), {
+      message: "Please enter a valid image URL",
+    }),
   caption: z.string().min(10, "Caption must be at least 10 characters"),
 });
 
@@ -36,7 +34,6 @@ export default function BlogForm({ setRefreshBlogs }) {
     resolver: zodResolver(schema),
   });
 
-  // Upload a file to ImgBB and return the URL
   const uploadToImgBB = async (file) => {
     const formData = new FormData();
     formData.append("image", file);
@@ -60,10 +57,8 @@ export default function BlogForm({ setRefreshBlogs }) {
     }
   };
 
-  // Upload an image from a URL to ImgBB and return the URL
   const uploadUrlToImgBB = async (imageUrl) => {
     try {
-      // Fetch the image as a blob
       const response = await fetch(imageUrl);
       const blob = await response.blob();
       const file = new File([blob], "image.jpg", { type: blob.type });
@@ -78,7 +73,6 @@ export default function BlogForm({ setRefreshBlogs }) {
     if (e.target.files[0]) {
       const file = e.target.files[0];
       setSelectedFile(file);
-      // Clear pictureUrl field if file is chosen
       setValue("pictureUrl", "");
     }
   };
@@ -87,7 +81,10 @@ export default function BlogForm({ setRefreshBlogs }) {
     try {
       const token = Cookies.get("accessToken");
       if (!token) {
-        alert("You must be logged in to create a blog");
+        toast.error("You must be logged in to create a blog", {
+          position: "bottom-right",
+        });
+
         navigate("/login");
         return;
       }
@@ -95,7 +92,6 @@ export default function BlogForm({ setRefreshBlogs }) {
       const payload = JSON.parse(atob(token.split(".")[1]));
       const userId = payload.sub || payload.id;
 
-      // Fetch user data to get username and profile picture
       const userResponse = await axios.get(
         `http://localhost:3000/users/${userId}`
       );
@@ -108,9 +104,7 @@ export default function BlogForm({ setRefreshBlogs }) {
         try {
           pictureUrl = await uploadUrlToImgBB(data.pictureUrl.trim());
         } catch (err) {
-          // Fallback: use the original URL if upload fails
           pictureUrl = data.pictureUrl.trim();
-          // Optionally, show a warning to the user here
         }
       }
 
@@ -136,13 +130,17 @@ export default function BlogForm({ setRefreshBlogs }) {
       });
       setSelectedFile(null);
 
-      if (setRefreshBlogs) setRefreshBlogs(true); // <--- trigger refresh
+      if (setRefreshBlogs) setRefreshBlogs(true);
 
-      alert("Blog published successfully!");
+      toast.success("Blog published successfully", {
+        position: "bottom-right",
+      });
       navigate("/");
     } catch (error) {
       console.error("Failed to create blog:", error);
-      alert("Failed to publish blog. Please try again.");
+      toast.error("Failed to create blog", {
+        position: "bottom-right",
+      });
     }
   };
 

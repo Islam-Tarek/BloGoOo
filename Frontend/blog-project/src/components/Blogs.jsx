@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 
 export default function Blogs({ blogs: propBlogs, refreshBlogs }) {
   const [blogs, setBlogs] = useState([]);
@@ -19,14 +20,12 @@ export default function Blogs({ blogs: propBlogs, refreshBlogs }) {
         const payload = JSON.parse(atob(token.split(".")[1]));
         const userId = payload.sub || payload.id;
 
-        // Fetch user data including hidden blogs
         const userResponse = await axios.get(
           `http://localhost:3000/users/${userId}`
         );
         setCurrentUser(userResponse.data);
         setHiddenBlogs(userResponse.data.hiddenBlogs || []);
 
-        // Fetch blogs only if not provided as prop
         if (!propBlogs) {
           const blogsResponse = await axios.get("http://localhost:3000/blogs");
           setBlogs(blogsResponse.data);
@@ -37,11 +36,9 @@ export default function Blogs({ blogs: propBlogs, refreshBlogs }) {
     };
 
     fetchUserAndBlogs();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [propBlogs, refreshBlogs]);
 
   const handleEdit = (blogId) => {
-    // Navigate to edit page with blog id
     navigate(`/edit-blog/${blogId}`);
   };
 
@@ -51,8 +48,14 @@ export default function Blogs({ blogs: propBlogs, refreshBlogs }) {
     try {
       await axios.delete(`http://localhost:3000/blogs/${blogId}`);
       setBlogs(blogs.filter((blog) => blog.id !== blogId));
+      toast.success("Blog deleted successfully", {
+        position: "bottom-right",
+      });
     } catch (error) {
       console.error("Error deleting blog:", error);
+      toast.error("Error deleting blog", {
+        position: "bottom-right",
+      });
     }
   };
 
@@ -64,19 +67,23 @@ export default function Blogs({ blogs: propBlogs, refreshBlogs }) {
       const payload = JSON.parse(atob(token.split(".")[1]));
       const userId = payload.sub || payload.id;
 
-      // Add blog to user's hidden blogs
       const updatedHiddenBlogs = [...hiddenBlogs, blogId];
       await axios.patch(`http://localhost:3000/users/${userId}`, {
         hiddenBlogs: updatedHiddenBlogs,
+      });
+      toast.success("Blog hidden successfully", {
+        position: "bottom-right",
       });
 
       setHiddenBlogs(updatedHiddenBlogs);
     } catch (error) {
       console.error("Error hiding blog:", error);
+      toast.error("Error hiding blog", {
+        position: "bottom-right",
+      });
     }
   };
 
-  // If blogs are provided as prop, use them; otherwise, use state
   const visibleBlogs = (propBlogs || blogs).filter(
     (blog) => !hiddenBlogs.includes(blog.id)
   );
@@ -207,8 +214,8 @@ export default function Blogs({ blogs: propBlogs, refreshBlogs }) {
                   alt="Blog"
                   className="rounded-xl m-1"
                   onError={(e) => {
-                    e.target.onerror = null; // Prevent infinite loop
-                    e.target.src = "https://via.placeholder.com/150"; // Fallback image
+                    e.target.onerror = null;
+                    e.target.src = "https://via.placeholder.com/150";
                   }}
                 />
               </figure>

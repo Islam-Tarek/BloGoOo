@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function PersonalProfile() {
   const [user, setUser] = useState(null);
@@ -48,8 +50,13 @@ export default function PersonalProfile() {
     try {
       await axios.delete(`http://localhost:3000/blogs/${blogId}`);
       setBlogs((prev) => prev.filter((blog) => blog.id !== blogId));
+      toast.success("Blog deleted successfully", {
+        position: "bottom-right",
+      });
     } catch (error) {
-      alert("Failed to delete blog.");
+      toast.error("Failed to delete blog", {
+        position: "bottom-right",
+      });
     }
   };
 
@@ -152,6 +159,7 @@ export default function PersonalProfile() {
           ))}
         </div>
       )}
+      <ToastContainer position="bottom-right" />
     </div>
   );
 }

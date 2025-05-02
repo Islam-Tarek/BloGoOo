@@ -30,7 +30,6 @@ export default function Search({ onSearchResults }) {
       }
     };
     fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleSearch = (event) => {
