@@ -1,4 +1,209 @@
 {
-  "users": [],
-  "blogs": []
+  "users": [
+    {
+      "id": "1",
+      "username": "islam",
+      "email": "islam@gmail.com",
+      "password": "123456",
+      "profilePicture": "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp",
+      "bio": "A short bio about me"
+    },
+    {
+      "id": "2",
+      "username": "tarek",
+      "email": "tarek@gmail.com",
+      "password": "123456"
+    },
+    {
+      "id": "3",
+      "username": "ahmed",
+      "email": "ahmed@gmail.com",
+      "password": "123456"
+    },
+    {
+      "email": "test@test.test",
+      "password": "$2a$10$3G4JG8K381X/ddc9Sp5Ru.Td1zSusuejo9cgU0WO2/pYJrAkWLxoi",
+      "username": "test",
+      "id": "d4VB9wU"
+    },
+    {
+      "email": "test2@test.test",
+      "password": "$2a$10$cHXGjA4.CX6ZQuSQ6vzvK.2LAYJQwoOdSTiSFaz6nDHMS6tXUOKZe",
+      "username": "test2",
+      "id": "lvZ7OGX"
+    },
+    {
+      "email": "test3@test.test",
+      "password": "$2a$10$jsVsgw4ULBUfitJEmfineuKP1u11j6ix468CoTWj1MLA..70kukXa",
+      "username": "test3",
+      "id": "g3gEuw0",
+      "profilePicture": "https://i.ibb.co/hFjQSSWd/Whats-App-Image-2024-10-19-at-12-09-51-AM.jpg",
+      "bio": "I'm test3 user"
+    },
+    {
+      "email": "test4@test.test",
+      "password": "$2a$10$xFKMhKe19KABkHF9/OitG.cxDwTkEwfyGcqovZ3MOAame5l3L0RQK",
+      "username": "test4",
+      "id": "2WQMPpH",
+      "hiddenBlogs": [
+        "2",
+        "3"
+      ],
+      "profilePicture": "https://i.ibb.co/pjNS8pmD/490137251-2499523193758908-2379037641044843565-n.jpg"
+    },
+    {
+      "email": "test9@test5.test",
+      "password": "$2a$10$eykkSxhjW1uPT0K.9LWwKul15eEIbBdVXqYJhWYL3tTLdu6aoxfjG",
+      "username": "test9",
+      "id": "r4nfSUm"
+    },
+    {
+      "email": "test9@test9.test",
+      "password": "$2a$10$cZsaK.vdoRk7L.XTq6ks6usTxlF/qEdkt6h.Zi5agDKiueOEuIgAm",
+      "username": "test90",
+      "hiddenBlogs": [
+        "UiIb6k2",
+        "O3eKcxP",
+        "2",
+        "H5GoaW8"
+      ],
+      "profilePicture": "https://i.ibb.co/WvZQ8W7M/481086135-122185334624255415-8686430680116849844-n.jpg",
+      "id": "-EAY_85",
+      "bio": "bioooooOOOooooo"
+    },
+    {
+      "email": "x@gmail.com",
+      "password": "$2a$10$vd52cvPIq498YbLTTFBr/.yPHIf7VL1hwnXKRfeDsXDOzxGqSt/rC",
+      "username": "xxxxxxxx",
+      "hiddenBlogs": [],
+      "profilePicture": "https://i.ibb.co/bgPYNKGX/your-code-github.jpg",
+      "id": "ZPrwA0u"
+    }
+  ],
+  "blogs": [
+    {
+      "id": "1",
+      "userId": "1",
+      "username": "islam",
+      "userProfilePicture": "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp",
+      "title": "Card Component",
+      "pictureUrl": "https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp",
+      "caption": "A card component has a figure, a body part, and inside body there are title and actions parts",
+      "likesCount": 0
+    },
+    {
+      "id": "2",
+      "userId": "2",
+      "username": "tarek",
+      "title": "Card Design",
+      "pictureUrl": "https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp",
+      "caption": "A card component has a figure, a body part, and inside body there are title and actions parts",
+      "likesCount": 0
+    },
+    {
+      "id": "3",
+      "userId": "1",
+      "username": "islam",
+      "userProfilePicture": "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp",
+      "title": "Component Design",
+      "pictureUrl": "https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp",
+      "caption": "A card component has a figure, a body part, and inside body there are title and actions parts",
+      "likesCount": 0
+    },
+    {
+      "title": ",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,",
+      "pictureUrl": "https://i.ibb.co/LD7bWDc8/Screenshot-from-2025-04-20-23-53-58.png",
+      "caption": "////////////////////////////",
+      "userId": "2WQMPpH",
+      "likesCount": 0,
+      "id": "wEwgVwg"
+    },
+    {
+      "title": "ssssssssssssssss",
+      "pictureUrl": "https://i.ibb.co/gb83rWcd/Screenshot-from-2025-02-08-18-23-09.png",
+      "caption": "ssssssssssssssssssss",
+      "userId": "2WQMPpH",
+      "likesCount": 0,
+      "id": "O3eKcxP"
+    },
+    {
+      "title": "==========",
+      "pictureUrl": "https://i.ibb.co/LLGpSrp/Screenshot-from-2025-04-23-14-56-04.png",
+      "caption": "================",
+      "userId": "2WQMPpH",
+      "likesCount": 0,
+      "id": "xhNCyQP"
+    },
+    {
+      "title": "00000000000000000000",
+      "pictureUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRbB8lRn_CnRhtwk0UYXumiTN_cUdxs3NtFYw&s",
+      "caption": "0000000000000000000000",
+      "userId": "2WQMPpH",
+      "likesCount": 0,
+      "id": "UiIb6k2"
+    },
+    {
+      "title": "ddddddddddddddd",
+      "pictureUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTX-s-9kWKx89rHOKtjwwRrLHSfGjKPoGLmVA&s",
+      "caption": "dddddddddd",
+      "userId": "2WQMPpH",
+      "likesCount": 0,
+      "id": "H5GoaW8"
+    },
+    {
+      "title": "aaaaaaaaaaaaaaaaaaa",
+      "pictureUrl": "https://i.ibb.co/LLGpSrp/Screenshot-from-2025-04-23-14-56-04.png",
+      "caption": "aaaaaaaaaaaaaaaaaaaaa",
+      "userId": "2WQMPpH",
+      "likesCount": 0,
+      "id": "0nmvwv6"
+    },
+    {
+      "title": "tesssssssssssssssssssssssssssssst5",
+      "caption": "tesssssssssssssssssssssssssssssssst555",
+      "userId": "-EAY_85",
+      "username": "test9",
+      "userProfilePicture": "https://i.ibb.co/WvZQ8W7M/481086135-122185334624255415-8686430680116849844-n.jpg",
+      "createdAt": "2025-05-02T04:59:38.020Z",
+      "pictureUrl": "https://www.ducksters.com/history/egypt_tutankhamun_mask.jpg",
+      "id": "421hmzP"
+    },
+    {
+      "title": "sssssssssssssssssssss",
+      "caption": "ttttttttttttttttttttttttt",
+      "userId": "-EAY_85",
+      "username": "test9",
+      "userProfilePicture": "https://i.ibb.co/WvZQ8W7M/481086135-122185334624255415-8686430680116849844-n.jpg",
+      "createdAt": "2025-05-02T05:00:20.771Z",
+      "pictureUrl": "https://i.ibb.co/nqxPG9Tb/Screenshot-from-2025-04-30-16-06-19.png",
+      "id": "DQtrw2z"
+    },
+    {
+      "title": "lassssssssssssssssssssssss",
+      "caption": "t tesssssssssssssssssssssssssssssst",
+      "userId": "-EAY_85",
+      "username": "test9",
+      "userProfilePicture": "https://i.ibb.co/WvZQ8W7M/481086135-122185334624255415-8686430680116849844-n.jpg",
+      "createdAt": "2025-05-02T05:00:43.831Z",
+      "id": "F6kI_iG"
+    },
+    {
+      "title": "not laaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaas",
+      "caption": "t tessssssssssssssssssssst",
+      "userId": "-EAY_85",
+      "username": "test9",
+      "userProfilePicture": "https://i.ibb.co/WvZQ8W7M/481086135-122185334624255415-8686430680116849844-n.jpg",
+      "createdAt": "2025-05-02T05:01:54.473Z",
+      "id": "gSgEmHL"
+    },
+    {
+      "title": "asdfsdaf",
+      "caption": "dsafsadfsdf",
+      "userId": "-EAY_85",
+      "username": "test90",
+      "userProfilePicture": "https://i.ibb.co/WvZQ8W7M/481086135-122185334624255415-8686430680116849844-n.jpg",
+      "createdAt": "2025-05-02T14:03:09.429Z",
+      "id": "FnvKocs"
+    }
+  ]
 }
