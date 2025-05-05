@@ -1,4 +1,94 @@
 {
-  "users": [],
-  "blogs": []
+  "users": [
+    {
+      "email": "user1@gmail.com",
+      "password": "$2a$10$bR3MfsAlOJ68IX6thzkoEewEkeKuYxaRqkIgYxZX8gIbj9HOsu6rO",
+      "username": "user1",
+      "hiddenBlogs": [],
+      "profilePicture": "https://i.ibb.co/x8Jh9xJZ/481086135-122185334624255415-8686430680116849844-n.jpg",
+      "id": 1,
+      "bio": "user1 biooooooooooooooooooo"
+    },
+    {
+      "email": "user3@gmail.com",
+      "password": "$2a$10$lkwlSayTW5L9BMrvTfEZ/eCqEF8/3KuqvaOwDk5Kvc28qtjUAvdGq",
+      "username": "user3",
+      "hiddenBlogs": [],
+      "profilePicture": "data:image/png;base64,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",
+      "id": 2,
+      "bio": "user3 biooooooooooo"
+    },
+    {
+      "email": "user2@gmail.com",
+      "password": "$2a$10$Ae7BIb6KNUgOZDPj1/xXB.eqZ/O6qg1onJNuhdnb6Hj446JhAXBGm",
+      "username": "user2",
+      "hiddenBlogs": [],
+      "profilePicture": "https://i.ibb.co/k6yrt6KC/mario-film-characters-photo-2.jpg",
+      "id": 3,
+      "bio": "user2 Biooooooooooooooooooo"
+    },
+    {
+      "email": "user4@gmail.com",
+      "password": "$2a$10$yVT.fLLY4mROqSbbVOAVz.kv2PVRuwqZHm5g7DE1WTz0CRqU0vyoS",
+      "username": "user4",
+      "hiddenBlogs": [
+        1,
+        2
+      ],
+      "profilePicture": "https://i.ibb.co/xtr9Kn5h/360-F-210969565-c-IHkcr-Iz-Rp-WNZzq8ea-Qn-Yot-G4pk-Hh0-P9.jpg",
+      "id": 4,
+      "bio": "user4 BiOOOOooooOO"
+    }
+  ],
+  "blogs": [
+    {
+      "title": "blog title 1",
+      "caption": "Blog 1Blog 1Blog 1Blog 1Blog 1Blog 1Blog 1Blog 1Blog 1Blog 1Blog 1Blog 1Blog 1Blog 1Blog 1Blog 1Blog 1Blog 1Blog 1Blog 1Blog 1Blog 1Blog 1Blog 1Blog 1Blog 1Blog 1Blog 1Blog 1Blog 1Blog 1Blog 1Blog 1Blog 1Blog 1Blog 1Blog 1Blog 1Blog 1Blog 1Blog 1Blog 1Blog 1Blog 1Blog 1Blog 1Blog 1Blog 1Blog 1Blog 1Blog 1Blog 1Blog 1Blog 1Blog 1Blog 1Blog 1Blog 1Blog 1Blog 1Blog 1Blog 1Blog 1",
+      "userId": "1",
+      "username": "user1",
+      "userProfilePicture": "https://i.ibb.co/x8Jh9xJZ/481086135-122185334624255415-8686430680116849844-n.jpg",
+      "createdAt": "2025-05-05T08:10:57.019Z",
+      "id": 1
+    },
+    {
+      "title": "blog 2 title",
+      "caption": "Blog 2Blog 2Blog 2Blog 2Blog 2Blog 2Blog 2Blog 2Blog 2Blog 2Blog 2Blog 2Blog 2Blog 2Blog 2Blog 2Blog 2Blog 2Blog 2Blog 2Blog 2Blog 2Blog 2Blog 2Blog 2Blog 2Blog 2Blog 2Blog 2Blog 2Blog 2Blog 2Blog 2Blog 2Blog 2Blog 2Blog2",
+      "userId": "3",
+      "username": "user2",
+      "userProfilePicture": "https://i.ibb.co/k6yrt6KC/mario-film-characters-photo-2.jpg",
+      "createdAt": "2025-05-05T08:39:11.913Z",
+      "pictureUrl": "https://i.ibb.co/ZpFZH0Hp/spring-summer-landscape-blue-sky-clouds-river-boat-green-trees-narew-countryside-grass-poland-water.webp",
+      "id": 2
+    },
+    {
+      "title": "blog3 title",
+      "caption": "Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3Blog3",
+      "userId": "2",
+      "username": "user3",
+      "userProfilePicture": "data:image/png;base64,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",
+      "createdAt": "2025-05-05T08:46:21.945Z",
+      "pictureUrl": "https://i.ibb.co/s9y27Nz0/5d3d843acb7dfd63bcf37e29-tree-and-woodland-company-landscape.jpg",
+      "id": 3
+    },
+    {
+      "title": "blog4 title",
+      "caption": "Blog4 Blog4 Blog4 Blog4 Blog4 Blog4 Blog4 Blog4 Blog4 Blog4 Blog4 Blog4 Blog4 Blog4 Blog4 Blog4 Blog4 Blog4 Blog4 Blog4 Blog4 Blog4 Blog4 Blog4 Blog4 Blog4 Blog4 Blog4 Blog4 Blog4 Blog4 ",
+      "userId": "3",
+      "username": "user2",
+      "userProfilePicture": "https://i.ibb.co/k6yrt6KC/mario-film-characters-photo-2.jpg",
+      "createdAt": "2025-05-05T08:56:16.324Z",
+      "pictureUrl": "https://i.ibb.co/Z1kkdz2M/istockphoto-2053229241-612x612.webp",
+      "id": 4
+    },
+    {
+      "title": "asdfdsfdsafadsf",
+      "caption": "asdfadsfsadfsdafasdfdasfadsffads",
+      "userId": "1",
+      "username": "user1",
+      "userProfilePicture": "https://i.ibb.co/x8Jh9xJZ/481086135-122185334624255415-8686430680116849844-n.jpg",
+      "createdAt": "2025-05-05T12:19:54.401Z",
+      "pictureUrl": "https://i.ibb.co/cKJVh9Nm/RLTUT-Key-image.jpg",
+      "id": 5
+    }
+  ]
 }

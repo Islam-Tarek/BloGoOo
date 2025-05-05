@@ -43,7 +43,9 @@ export default function ChangePassword() {
       const payload = JSON.parse(atob(token.split(".")[1]));
       const userId = payload.sub || payload.id;
 
-      const userRes = await axios.get(`http://localhost:3000/users/${userId}`);
+      const userRes = await axios.get(
+        `${import.meta.env.VITE_HOST}/users/${userId}`
+      );
       const dbPassword = userRes.data.password;
 
       const isMatch = await bcrypt.compare(currentPassword, dbPassword);
@@ -53,7 +55,7 @@ export default function ChangePassword() {
         return;
       }
 
-      await axios.patch(`http://localhost:3000/users/${userId}`, {
+      await axios.patch(`${import.meta.env.VITE_HOST}/users/${userId}`, {
         password: newPassword,
       });
       setError("");

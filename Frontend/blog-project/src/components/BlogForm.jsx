@@ -43,16 +43,24 @@ export default function BlogForm({ setRefreshBlogs }) {
         formData,
         {
           params: {
-            key: "2e0f19f1ad576ff1d5d842cd56c08a90",
+            key: import.meta.env.VITE_IMGBB_API_KEY,
           },
           headers: {
             "Content-Type": "multipart/form-data",
           },
         }
       );
-      return response.data.data.url;
+      if (
+        !response.data ||
+        !response.data.data ||
+        !response.data.data.display_url
+      ) {
+        throw new Error("Invalid response from ImgBB");
+      }
+      return response.data.data.display_url;
     } catch (error) {
       console.error("Error uploading to ImgBB:", error);
+      toast.error("Failed to upload image. Please try again.");
       throw error;
     }
   };
@@ -81,10 +89,7 @@ export default function BlogForm({ setRefreshBlogs }) {
     try {
       const token = Cookies.get("accessToken");
       if (!token) {
-        toast.error("You must be logged in to create a blog", {
-          position: "bottom-right",
-        });
-
+        toast.error("You must be logged in to create a blog");
         navigate("/login");
         return;
       }
@@ -93,22 +98,28 @@ export default function BlogForm({ setRefreshBlogs }) {
       const userId = payload.sub || payload.id;
 
       const userResponse = await axios.get(
-        `http://localhost:3000/users/${userId}`
+        `${import.meta.env.VITE_HOST}/users/${userId}`
       );
+
       const { username, profilePicture } = userResponse.data;
 
       let pictureUrl = "";
       if (selectedFile) {
-        pictureUrl = await uploadToImgBB(selectedFile);
-      } else if (data.pictureUrl && data.pictureUrl.trim() !== "") {
         try {
-          pictureUrl = await uploadUrlToImgBB(data.pictureUrl.trim());
+          pictureUrl = await uploadToImgBB(selectedFile);
+          if (!pictureUrl) {
+            toast.error("Failed to upload image");
+            return;
+          }
         } catch (err) {
-          pictureUrl = data.pictureUrl.trim();
+          toast.error("Failed to upload image");
+          return;
         }
+      } else if (data.pictureUrl && data.pictureUrl.trim() !== "") {
+        // Instead of uploading the external URL to ImgBB, just use it directly
+        pictureUrl = data.pictureUrl.trim();
       }
 
-      // Build blog object, omit pictureUrl if not present
       const blogData = {
         title: data.title,
         caption: data.caption,
@@ -116,12 +127,10 @@ export default function BlogForm({ setRefreshBlogs }) {
         username,
         userProfilePicture: profilePicture,
         createdAt: new Date().toISOString(),
+        ...(pictureUrl && { pictureUrl }),
       };
-      if (pictureUrl) {
-        blogData.pictureUrl = pictureUrl;
-      }
 
-      await axios.post("http://localhost:3000/blogs", blogData);
+      await axios.post(`${import.meta.env.VITE_HOST}/blogs`, blogData);
 
       reset({
         title: "",
