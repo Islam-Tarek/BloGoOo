@@ -21,15 +21,13 @@ export default function Blogs({ blogs: propBlogs, refreshBlogs }) {
         const userId = payload.sub || payload.id;
 
         const userResponse = await axios.get(
-          `${import.meta.env.VITE_HOST}/users/${userId}`
+          `http://localhost:3000/users/${userId}`
         );
         setCurrentUser(userResponse.data);
         setHiddenBlogs(userResponse.data.hiddenBlogs || []);
 
         if (!propBlogs) {
-          const blogsResponse = await axios.get(
-            `${import.meta.env.VITE_HOST}/blogs`
-          );
+          const blogsResponse = await axios.get("http://localhost:3000/blogs");
           setBlogs(blogsResponse.data);
         }
       } catch (err) {
@@ -48,7 +46,7 @@ export default function Blogs({ blogs: propBlogs, refreshBlogs }) {
     if (!window.confirm("Are you sure you want to delete this blog?")) return;
 
     try {
-      await axios.delete(`${import.meta.env.VITE_HOST}/blogs/${blogId}`);
+      await axios.delete(`http://localhost:3000/blogs/${blogId}`);
       setBlogs(blogs.filter((blog) => blog.id !== blogId));
       toast.success("Blog deleted successfully", {
         position: "bottom-right",
@@ -70,7 +68,7 @@ export default function Blogs({ blogs: propBlogs, refreshBlogs }) {
       const userId = payload.sub || payload.id;
 
       const updatedHiddenBlogs = [...hiddenBlogs, blogId];
-      await axios.patch(`${import.meta.env.VITE_HOST}/users/${userId}`, {
+      await axios.patch(`http://localhost:3000/users/${userId}`, {
         hiddenBlogs: updatedHiddenBlogs,
       });
       toast.success("Blog hidden successfully", {
@@ -95,9 +93,6 @@ export default function Blogs({ blogs: propBlogs, refreshBlogs }) {
       {visibleBlogs.map((blog) => {
         const isExpanded = expandedBlogId === blog.id;
         const shouldTruncate = blog.caption && blog.caption.length > 300;
-        const isAuthor =
-          currentUser && String(blog.userId) === String(currentUser.id);
-
         return (
           <div
             key={blog.id}
@@ -109,7 +104,7 @@ export default function Blogs({ blogs: propBlogs, refreshBlogs }) {
                   <img
                     src={
                       blog.userProfilePicture ||
-                      "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAd0lEQVR4nB2KzQnCQBgFP7BG69AmogV48GAHYkoQQRHZH7NJzM1cc9gSosjI2wcDw/BseWRRj2xiJgi5mtVvtt8fPFNH0/bITyOV6TXPHx4uFOQx4y1kAoALTUHzGWf3iVXqXviYCm0/cJtYm7bbH6rz5eqFXPEPdLxvulTakkIAAAAASUVORK5CYII="
+                      "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
                     }
                     alt="User"
                     className="w-full h-full object-cover"
@@ -148,7 +143,7 @@ export default function Blogs({ blogs: propBlogs, refreshBlogs }) {
                   tabIndex={0}
                   className="dropdown-content menu bg-base-100 rounded-box z-1 w-40 p-2 shadow-sm"
                 >
-                  {isAuthor ? (
+                  {currentUser && blog.userId === currentUser.id ? (
                     <>
                       <li>
                         <a onClick={() => handleEdit(blog.id)}>Edit</a>

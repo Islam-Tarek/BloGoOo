@@ -20,9 +20,7 @@ export default function EditBlog() {
     const fetchBlog = async () => {
       setLoading(true);
       try {
-        const res = await axios.get(
-          `${import.meta.env.VITE_HOST}/blogs/${blogId}`
-        );
+        const res = await axios.get(`http://localhost:3000/blogs/${blogId}`);
         setBlog(res.data);
         setTitle(res.data.title || "");
         setCaption(res.data.caption || "");
@@ -44,22 +42,22 @@ export default function EditBlog() {
         formData,
         {
           params: {
-            key: import.meta.env.VITE_IMGBB_API_KEY,
+            key: "2e0f19f1ad576ff1d5d842cd56c08a90",
           },
           headers: {
             "Content-Type": "multipart/form-data",
           },
         }
       );
-      if (
-        !response.data ||
-        !response.data.data ||
-        !response.data.data.display_url
-      ) {
-        throw new Error("Invalid response from ImgBB");
-      }
-      return response.data.data.display_url;
+      toast.success("Image uploaded successfully", {
+        position: "bottom-right",
+      });
+      return response.data.data.url;
     } catch (error) {
+      // setError("Error uploading image.");
+      toast.error("Error uploading image", {
+        position: "bottom-right",
+      });
       throw error;
     }
   };
@@ -78,29 +76,21 @@ export default function EditBlog() {
       let newPictureUrl = pictureUrl;
       if (selectedFile) {
         newPictureUrl = await uploadToImgBB(selectedFile);
-        if (!newPictureUrl) {
-          setSaving(false);
-          toast.error("Failed to upload image. Please try again.", {
-            position: "bottom-right",
-          });
-          return;
-        }
       }
-      await axios.patch(`${import.meta.env.VITE_HOST}/blogs/${blogId}`, {
+      await axios.patch(`http://localhost:3000/blogs/${blogId}`, {
         title,
         caption,
         pictureUrl: newPictureUrl,
       });
-      setSaving(false);
-      setSelectedFile(null);
+      setSaving(false); // <-- move this before navigate
       toast.success("Blog updated successfully", {
         position: "bottom-right",
       });
       setTimeout(() => {
         navigate("/personal-profile");
-      }, 1000);
+      }, 1000); // Give time for toast to show before navigating
     } catch (err) {
-      setSaving(false);
+      setSaving(false); // <-- move this before toast
       setError("Failed to update blog.");
       toast.error("Error updating blog", {
         position: "bottom-right",

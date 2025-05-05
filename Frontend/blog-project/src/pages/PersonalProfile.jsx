@@ -24,12 +24,12 @@ export default function PersonalProfile() {
         const userId = payload.sub || payload.id;
 
         const userRes = await axios.get(
-          `${import.meta.env.VITE_HOST}/users/${userId}`
+          `http://localhost:3000/users/${userId}`
         );
         setUser(userRes.data);
 
         const blogsRes = await axios.get(
-          `${import.meta.env.VITE_HOST}/blogs?userId=${userId}`
+          `http://localhost:3000/blogs?userId=${userId}`
         );
         setBlogs(blogsRes.data);
       } catch (err) {
@@ -48,7 +48,7 @@ export default function PersonalProfile() {
   const handleDelete = async (blogId) => {
     if (!window.confirm("Are you sure you want to delete this blog?")) return;
     try {
-      await axios.delete(`${import.meta.env.VITE_HOST}/blogs/${blogId}`);
+      await axios.delete(`http://localhost:3000/blogs/${blogId}`);
       setBlogs((prev) => prev.filter((blog) => blog.id !== blogId));
       toast.success("Blog deleted successfully", {
         position: "bottom-right",
@@ -70,7 +70,10 @@ export default function PersonalProfile() {
     <div className="max-w-3xl mx-auto mt-10 p-6 bg-base-100 rounded shadow">
       <div className="flex items-center gap-6 mb-8">
         <img
-          src={user.profilePicture || "https://via.placeholder.com/100"}
+          src={
+            user.profilePicture ||
+            "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+          }
           alt="Profile"
           className="w-20 h-20 rounded-full object-cover border-2 border-primary"
         />

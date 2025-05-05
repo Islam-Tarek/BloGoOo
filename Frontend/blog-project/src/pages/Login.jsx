@@ -14,7 +14,6 @@ const schema = z.object({
 
 export default function Login() {
   const navigate = useNavigate();
-  console.log("Login component rendered");
 
   const {
     register,
@@ -26,8 +25,7 @@ export default function Login() {
   });
 
   const onSubmit = async (data) => {
-    console.log("Submitting", data); // Debug log
-    const URL = `${import.meta.env.VITE_HOST}/login`;
+    const URL = "http://localhost:3000/login";
     const { email, password } = data;
     try {
       const response = await axios.post(URL, {
@@ -114,7 +112,6 @@ export default function Login() {
               type="submit"
               disabled={isSubmitting}
               className="btn btn-primary w-full py-3 px-4 rounded-md"
-              onClick={() => console.log("Button clicked")}
             >
               {isSubmitting ? "Signing in..." : "Sign in"}
             </button>
