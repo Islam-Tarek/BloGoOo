@@ -9,8 +9,8 @@ export default function Search({ onSearchResults }) {
     const fetchData = async () => {
       try {
         const [blogsRes, usersRes] = await Promise.all([
-          axios.get("http://localhost:3000/blogs"),
-          axios.get("http://localhost:3000/users"),
+          axios.get(`${import.meta.env.VITE_HOST}/blogs`),
+          axios.get(`${import.meta.env.VITE_HOST}/users`),
         ]);
 
         const usersMap = Object.fromEntries(

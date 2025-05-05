@@ -37,7 +37,7 @@ export default function EditProfile() {
         const userId = payload.sub || payload.id;
 
         const response = await axios.get(
-          `http://localhost:3000/users/${userId}`
+          `${import.meta.env.VITE_HOST}/users/${userId}`
         );
         setUserData(response.data);
 
@@ -56,46 +56,61 @@ export default function EditProfile() {
     fileInputRef.current?.click();
   };
 
-  const handleImageChange = async (e) => {
-    if (e.target.files[0]) {
-      setLoading(true);
-      const file = e.target.files[0];
-      try {
-        const formData = new FormData();
-        formData.append("image", file);
+  const uploadToImgBB = async (file) => {
+    const formData = new FormData();
+    formData.append("image", file);
 
-        const response = await axios.post(
-          "https://api.imgbb.com/1/upload",
-          formData,
-          {
-            params: {
-              key: "2e0f19f1ad576ff1d5d842cd56c08a90",
-            },
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
-
-        const token = Cookies.get("accessToken");
-        if (!token) return;
-
-        const payload = JSON.parse(atob(token.split(".")[1]));
-        const userId = payload.sub || payload.id;
-
-        await axios.patch(`http://localhost:3000/users/${userId}`, {
-          profilePicture: response.data.data.url,
-        });
-
-        setUserData((prev) => ({
-          ...prev,
-          profilePicture: response.data.data.url,
-        }));
-      } catch (error) {
-        console.error("Error uploading image:", error);
-      } finally {
-        setLoading(false);
+    const response = await axios.post(
+      "https://api.imgbb.com/1/upload",
+      formData,
+      {
+        params: {
+          key: import.meta.env.VITE_IMGBB_API_KEY,
+        },
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       }
+    );
+    return response.data.data.display_url;
+  };
+
+  const handleImageChange = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setLoading(true);
+    try {
+      const url = await uploadToImgBB(file);
+
+      const token = Cookies.get("accessToken");
+      if (!token) throw new Error("Not logged in");
+      const payload = JSON.parse(atob(token.split(".")[1]));
+      const userId = payload.sub || payload.id;
+
+      // Update user with ImgBB URL
+      const userResponse = await axios.patch(
+        `${import.meta.env.VITE_HOST}/users/${userId}`,
+        { profilePicture: url }
+      );
+      if (userResponse.status !== 200)
+        throw new Error("Failed to update user profile");
+
+      setUserData((prev) => ({
+        ...prev,
+        profilePicture: url,
+      }));
+
+      toast.success("Profile picture updated successfully");
+    } catch (error) {
+      console.error("Error uploading profile picture:", error);
+      toast.error(
+        error.message ||
+          error.response?.data?.error ||
+          "Failed to update profile picture"
+      );
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -107,7 +122,7 @@ export default function EditProfile() {
       const payload = JSON.parse(atob(token.split(".")[1]));
       const userId = payload.sub || payload.id;
 
-      await axios.patch(`http://localhost:3000/users/${userId}`, data);
+      await axios.patch(`${import.meta.env.VITE_HOST}/users/${userId}`, data);
       toast.success("Profile updated successfully", {
         position: "bottom-right",
       });
@@ -132,11 +147,10 @@ export default function EditProfile() {
           >
             <img
               src={
-                userData?.profilePicture ||
-                "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                userData?.profilePicture || "https://via.placeholder.com/100"
               }
               alt="Profile"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover rounded-full"
             />
           </div>
           <input
@@ -150,6 +164,7 @@ export default function EditProfile() {
             <button
               type="button"
               className="btn btn-primary rounded-4xl w-33"
+              onClick={handleImageClick}
               disabled={loading}
             >
               {loading ? "Uploading..." : "Upload image"}
